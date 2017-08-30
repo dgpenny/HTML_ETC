@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Template</title>
+<meta name='author' content='Mike Foster (Cross-Browser.com)'>
+<style type='text/css'>
+div {
+  margin: 2em;
+}
+</style>
+<script type='text/javascript'>
+window.onload = function()
+{
+  taInit();
+}
+// initialize all textareas
+function taInit()
+{
+  var i, ta = document.getElementsByTagName('textarea');
+  for (i = 0; i < ta.length; ++i)
+  {
+    ta[i]._ta_default_rows_ = ta[i].rows;
+    ta[i]._ta_default_cols_ = ta[i].cols;
+    ta[i].onkeyup = taExpand;
+    ta[i].onmouseover = taExpand;
+    ta[i].onmouseout = taRestore;
+    ta[i].onfocus = taOnFocus;
+    ta[i].onblur = taOnBlur;
+  }
+}
+function taOnFocus(e)
+{
+  this._ta_is_focused_ = true;
+  this.onmouseover();
+}
+function taOnBlur()
+{
+  this._ta_is_focused_ = false;
+  this.onmouseout();
+}
+// set to default size if not focused
+function taRestore()
+{
+  if (!this._ta_is_focused_)
+  {
+    this.rows = this._ta_default_rows_;
+    this.cols = this._ta_default_cols_;
+  }
+}
+// adjust rows and cols to fit text
+function taExpand()
+{
+  var a, i, c = 0;
+  a = this.value.split('\
+');
+  for (i = 0; i < a.length; i++) {
+    if (a[i].length > c) c = a[i].length;
+  }
+  this.cols = c;
+  this.rows = a.length;
+}
+</script>
+</head>
+<body>
+
+<div>
+<textarea rows='1' cols='50' wrap='virtual'>
+Lorem ipsum dolor sit amet, consectetaur adipisicing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+</textarea>
+</div>
+
+<div>
+<textarea rows='1' cols='50' wrap='virtual'>
+Lorem ipsum dolor sit amet, consectetaur adipisicing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+nisi ut aliquip ex ea commodo consequat.
+</textarea>
+</div>
+
+</body>
+</html>
